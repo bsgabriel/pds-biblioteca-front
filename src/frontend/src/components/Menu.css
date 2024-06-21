@@ -5,6 +5,7 @@
   align-items: center;
   border-bottom: solid 1px gainsboro;
   color: #3b82f6;
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
 }
 
 .menu ul {
