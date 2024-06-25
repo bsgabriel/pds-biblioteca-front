@@ -14,6 +14,9 @@ const Menu = () => (
           <li>
             <Link to="/books">Cadastro de Livros</Link>
           </li>
+          <li>
+            <Link to="/reserva">Reserva de Livros</Link>
+          </li>
         </ul>
       </nav>
     </div>
