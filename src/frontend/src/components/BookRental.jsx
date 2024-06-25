@@ -1,19 +1,23 @@
 import React from "react";
-import Layout from "./Layout";
-import Cart from "./Cart";
-import UserInfo from "./UserInfo";
-import "./BookRental.css";
-import harryPotterImage from "../assets/harry.jpeg";
 import aneisImage from "../assets/aneis.jpeg";
 import bananaImage from "../assets/banana.jpeg";
+import harryPotterImage from "../assets/harry.jpeg";
+import userImage from "../assets/leoncio.jpeg";
+import "./BookRental.css";
+import Cart from "./Cart";
+import Layout from "./Layout";
+import UserBar from "./UserBar";
+import UserInfo from "./UserInfo";
 
 const BookRental = () => {
   const user = {
+    id: "123456",
     name: "Jõao da Silva",
     phone: "(99) 99999 - 9999",
     email: "joao.silva@gmail.com",
     cep: "99999 - 999",
     address: "Rua do João, Nº 99",
+    image: userImage,
   };
 
   const books = [
@@ -46,8 +50,11 @@ const BookRental = () => {
   return (
     <Layout>
       <div className="book-rental">
-        <Cart books={books} />
-        <UserInfo user={user} />
+        <UserBar user={user} />
+        <div className="cart-user-info-container">
+          <Cart books={books} />
+          <UserInfo user={user} />
+        </div>
       </div>
     </Layout>
   );

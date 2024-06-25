@@ -1,19 +1,26 @@
 import React from "react";
+import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom"; // Passo 1
 import CartItem from "./CartItem";
 
 const Cart = ({ books }) => {
+  const navigate = useNavigate(); // Passo 2
+
+  const handleContinueBrowsing = () => {
+    navigate("/"); // Passo 3
+  };
+
   return (
     <div className="cart">
       <h2>Carrinho de Livros</h2>
       <table className="cart-table">
-        <thead>
+        <thead className="cart-header">
           <tr>
-            <th>Imagem</th>
             <th>Título do Livro</th>
             <th>Quantidade</th>
             <th>Semanas</th>
             <th>Devolução</th>
-            <th>Remover</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -22,7 +29,10 @@ const Cart = ({ books }) => {
           ))}
         </tbody>
       </table>
-      <button className="continue-browsing">Continuar Navegando</button>
+      <button className="continue-browsing" onClick={handleContinueBrowsing}>
+        <IoIosArrowBack className="mr-2" />
+        Continuar Navegando
+      </button>
     </div>
   );
 };
