@@ -1,5 +1,5 @@
 import React from "react";
-import "./UserBar.css";
+import "../styles/UserBar.css";
 
 const UserBar = ({ user }) => {
   return (

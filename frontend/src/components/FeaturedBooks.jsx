@@ -1,8 +1,8 @@
 import React from "react";
 import chevete from "../assets/chevete.jpeg";
 import clio from "../assets/clio.jpeg";
+import "../styles/FeaturedBooks.css";
 import BookCard from "./BookCard";
-import "./FeaturedBooks.css";
 
 const featuredBooks = [
   {

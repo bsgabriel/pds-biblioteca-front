@@ -1,6 +1,6 @@
 import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
-import "./BookCard.css";
+import "../styles/BookCard.css";
 
 const BookCard = ({ image, title, genre }) => {
   return (

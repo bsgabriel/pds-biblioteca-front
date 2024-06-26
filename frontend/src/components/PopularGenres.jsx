@@ -1,9 +1,9 @@
 import React from "react";
 import carro from "../assets/images (1).png";
 import uninho from "../assets/uninho.jpeg";
+import "../styles/GenresCard.css";
+import "../styles/PopularGenres.css";
 import GenresCard from "./GenresCard";
-import "./GenresCard.css";
-import "./PopularGenres.css";
 
 const popularGenres = [
   { image: uninho, genre: "Fantasia" },

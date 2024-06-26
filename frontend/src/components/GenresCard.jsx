@@ -1,5 +1,5 @@
 import React from "react";
-import "./GenresCard.css";
+import "../styles/GenresCard.css";
 
 const GenreCard = ({ image, genre }) => {
   return (

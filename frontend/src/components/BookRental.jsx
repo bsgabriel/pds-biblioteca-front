@@ -3,7 +3,7 @@ import aneisImage from "../assets/aneis.jpeg";
 import bananaImage from "../assets/banana.jpeg";
 import harryPotterImage from "../assets/harry.jpeg";
 import userImage from "../assets/leoncio.jpeg";
-import "./BookRental.css";
+import "../styles/BookRental.css";
 import Cart from "./Cart";
 import Layout from "./Layout";
 import UserBar from "./UserBar";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaImage } from "react-icons/fa"; // Import the image icon from react-icons
-import "./BookForm.css";
+import "../styles/BookForm.css";
 
 const BookForm = ({ book, onSave }) => {
   const [title, setTitle] = useState("");

@@ -1,6 +1,5 @@
 import React from "react";
-
-import "./BookRental.css";
+import "../styles/BookRental.css";
 
 const UserInfo = ({ user }) => {
   return (
