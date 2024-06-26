@@ -1,8 +1,13 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { FaImage } from "react-icons/fa"; // Import the image icon from react-icons
+import { FaImage } from "react-icons/fa";
+import { useParams } from "react-router-dom";
 import "../styles/BookForm.css";
 
-const BookForm = ({ book, onSave }) => {
+const baseURL = "http://localhost:8080/book";
+
+const BookForm = ({ onSave }) => {
+  const { bookId } = useParams();
   const [formData, setFormData] = useState({
     title: "",
     author: "",
@@ -12,10 +17,20 @@ const BookForm = ({ book, onSave }) => {
   });
 
   useEffect(() => {
-    if (book) {
-      setFormData(book);
+    const fetchBook = async () => {
+      try {
+        const response = await axios.get(`${baseURL}/${bookId}`);
+        console.log(response.data);
+        setFormData(response.data);
+      } catch (error) {
+        console.error("Error fetching book:", error);
+      }
+    };
+
+    if (bookId) {
+      fetchBook();
     }
-  }, [book]);
+  }, [bookId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,9 +52,18 @@ const BookForm = ({ book, onSave }) => {
     reader.readAsDataURL(file);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
+    try {
+      if (bookId) {
+        await axios.put(`${baseURL}/${bookId}`, formData);
+      } else {
+        await axios.post(baseURL, formData);
+      }
+      onSave();
+    } catch (error) {
+      console.error("Error saving book:", error);
+    }
   };
 
   return (

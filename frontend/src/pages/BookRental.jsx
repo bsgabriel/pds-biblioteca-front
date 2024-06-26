@@ -25,32 +25,6 @@ const BookRental = () => {
     address: "Rua do João, Nº 99",
     image: userImage,
   };
-  // const defaultBooks = [
-  //   {
-  //     image: harryPotterImage,
-  //     title: "Harry Potter e a Pedra Filosofal",
-  //     author: "J. K. Rowling",
-  //     quantity: 1,
-  //     weeks: 4,
-  //     dueDate: moment().add(4, "weeks").format("DD/MM/YYYY"),
-  //   },
-  //   {
-  //     image: aneisImage,
-  //     title: "O Senhor dos Anéis",
-  //     author: "J. R. R. Tolkien",
-  //     quantity: 1,
-  //     weeks: 2,
-  //     dueDate: moment().add(2, "weeks").format("DD/MM/YYYY"),
-  //   },
-  //   {
-  //     image: bananaImage,
-  //     title: "Diário de um Banana",
-  //     author: "Jeff Kinney",
-  //     quantity: 1,
-  //     weeks: 1,
-  //     dueDate: moment().add(1, "weeks").format("DD/MM/YYYY"),
-  //   },
-  // ];
 
   useEffect(() => {
     const fetchSelectedBook = async () => {

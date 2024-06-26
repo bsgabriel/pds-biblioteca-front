@@ -53,7 +53,6 @@ const Home = () => {
   };
 
   const handleEdit = (book) => {
-    // Implemente aqui a navegação para a página de edição de livro
     navigate(`/books/${book.id}`);
   };
 

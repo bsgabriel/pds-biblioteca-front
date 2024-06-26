@@ -10,7 +10,7 @@ const BookList = ({ books, onEdit, onDelete, onReserva }) => (
           <th>Autor</th>
           <th>Editora</th>
           <th>Ano</th>
-          <th>Actions</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -28,7 +28,7 @@ const BookList = ({ books, onEdit, onDelete, onReserva }) => (
                 Excluir
               </button>
               <button onClick={() => onReserva(book.id)} className="carrinho">
-                Carrinho
+                Reservar
               </button>
             </td>
           </tr>
