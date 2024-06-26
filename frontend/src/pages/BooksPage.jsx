@@ -1,7 +1,10 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import BookForm from "../components/BookForm";
 import Layout from "../components/Layout";
+
+const baseURL = "http://localhost:8080/book";
 
 const BooksPage = () => {
   const [books, setBooks] = useState([
@@ -34,14 +37,18 @@ const BooksPage = () => {
     }
   }, [editId, books]);
 
-  const handleSaveBook = (newBook) => {
+  const handleSaveBook = async (newBook) => {
     if (editingBook) {
       setBooks(
         books.map((book) => (book.id === editingBook.id ? newBook : book))
       );
     } else {
-      newBook.id = books.length + 1;
-      setBooks([...books, newBook]);
+      try {
+        const response = await axios.post(baseURL, newBook);
+        setBooks([...books, response.data]);
+      } catch (error) {
+        console.error("Error saving book:", error);
+      }
     }
     window.location.href = "/";
   };

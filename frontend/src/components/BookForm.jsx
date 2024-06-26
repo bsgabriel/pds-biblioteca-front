@@ -3,54 +3,43 @@ import { FaImage } from "react-icons/fa"; // Import the image icon from react-ic
 import "../styles/BookForm.css";
 
 const BookForm = ({ book, onSave }) => {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [publisher, setPublisher] = useState("");
-  const [year, setYear] = useState("");
-  const [image, setImage] = useState("");
-  const [preview, setPreview] = useState("");
+  const [formData, setFormData] = useState({
+    title: "",
+    author: "",
+    publisher: "",
+    year: "",
+    imageBook: "",
+  });
 
   useEffect(() => {
     if (book) {
-      setTitle(book.title);
-      setAuthor(book.author);
-      setPublisher(book.publisher);
-      setYear(book.year);
-      setImage(book.image || "");
-      setPreview(book.image ? `data:image/png;base64,${book.image}` : "");
-    } else {
-      setTitle("");
-      setAuthor("");
-      setPublisher("");
-      setYear("");
-      setImage("");
-      setPreview("");
+      setFormData(book);
     }
   }, [book]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newBook = {
-      id: book ? book.id : null,
-      title,
-      author,
-      publisher,
-      year,
-      image,
-    };
-    onSave(newBook);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result.split(",")[1]); // Save base64 without the prefix
-        setPreview(reader.result); // This is the full base64 string, used for preview
-      };
-      reader.readAsDataURL(file);
-    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        imageBook: reader.result,
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSave(formData);
   };
 
   return (
@@ -60,8 +49,9 @@ const BookForm = ({ book, onSave }) => {
           <label>Título</label>
           <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
             required
           />
         </div>
@@ -69,8 +59,9 @@ const BookForm = ({ book, onSave }) => {
           <label>Autor</label>
           <input
             type="text"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
+            name="author"
+            value={formData.author}
+            onChange={handleChange}
             required
           />
         </div>
@@ -78,8 +69,9 @@ const BookForm = ({ book, onSave }) => {
           <label>Editora</label>
           <input
             type="text"
-            value={publisher}
-            onChange={(e) => setPublisher(e.target.value)}
+            name="publisher"
+            value={formData.publisher}
+            onChange={handleChange}
             required
           />
         </div>
@@ -87,8 +79,9 @@ const BookForm = ({ book, onSave }) => {
           <label>Ano</label>
           <input
             type="number"
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
+            name="year"
+            value={formData.year}
+            onChange={handleChange}
             required
           />
         </div>
@@ -99,8 +92,12 @@ const BookForm = ({ book, onSave }) => {
         <button type="submit">Salvar</button>
       </form>
       <div className="image-preview-container">
-        {preview ? (
-          <img src={preview} alt="Preview" className="image-preview" />
+        {formData.imageBook ? (
+          <img
+            src={formData.imageBook}
+            alt="Preview"
+            className="image-preview"
+          />
         ) : (
           <div className="image-placeholder">
             <FaImage size={64} color="#ccc" />

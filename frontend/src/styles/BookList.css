@@ -7,6 +7,7 @@
   border: 1px solid #dcdcdc;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 25px;
 }
 
 .book-list table {
@@ -47,6 +48,10 @@
 
 .book-list button.edit {
   background-color: #27ae60;
+}
+
+.book-list button.carrinho {
+  background-color: #2986f6;
 }
 
 .book-list button:hover {

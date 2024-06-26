@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/BookList.css";
 
-const BookList = ({ books, onEdit, onDelete }) => (
+const BookList = ({ books, onEdit, onDelete, onReserva }) => (
   <div className="book-list">
     <table>
       <thead>
@@ -24,7 +24,12 @@ const BookList = ({ books, onEdit, onDelete }) => (
               <button onClick={() => onEdit(book)} className="edit mr-2">
                 Editar
               </button>
-              <button onClick={() => onDelete(book.id)}>Excluir</button>
+              <button onClick={() => onDelete(book.id)} className="mr-2">
+                Excluir
+              </button>
+              <button onClick={() => onReserva(book.id)} className="carrinho">
+                Carrinho
+              </button>
             </td>
           </tr>
         ))}

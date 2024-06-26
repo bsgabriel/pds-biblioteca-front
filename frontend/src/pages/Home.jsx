@@ -1,37 +1,61 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
-import estante from "../assets/teste.jpeg"; // Certifique-se de que este caminho está correto
+import { useNavigate } from "react-router-dom";
+import estante from "../assets/teste.jpeg";
+import BookList from "../components/BookList";
 import Layout from "../components/Layout";
-
-import FeaturedBooks from "../components/FeaturedBooks";
-import PopularGenres from "../components/PopularGenres";
 import "../styles/Home.css";
 
+const baseURL = "http://localhost:8080/book";
+
 const Home = () => {
-  // const [books, setBooks] = useState([
-  //   {
-  //     id: 1,
-  //     title: "Mock Book 1",
-  //     author: "Author 1",
-  //     publisher: "Publisher 1",
-  //     year: 2021,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Mock Book 2",
-  //     author: "Author 2",
-  //     publisher: "Publisher 2",
-  //     year: 2022,
-  //   },
-  // ]);
+  const [books, setBooks] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
-  // const handleEditBook = (book) => {
-  //   window.location.href = `/books?edit=${book.id}`;
-  // };
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get(baseURL);
+        setBooks(response.data);
+        setFilteredBooks(response.data);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+    fetchBooks();
+  }, []);
 
-  // const handleDeleteBook = (id) => {
-  //   setBooks(books.filter((book) => book.id !== id));
-  // };
+  const handleSearch = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+    const filtered = books.filter((book) =>
+      book.title.toLowerCase().includes(term.toLowerCase())
+    );
+    setFilteredBooks(filtered);
+  };
+
+  const handleReserva = (bookId) => {
+    navigate(`/reserva/${bookId}`);
+  };
+
+  const handleDelete = async (bookId) => {
+    try {
+      await axios.delete(`${baseURL}/${bookId}`);
+      const updatedBooks = books.filter((book) => book.id !== bookId);
+      setBooks(updatedBooks);
+      setFilteredBooks(updatedBooks);
+    } catch (error) {
+      console.error("Error deleting book:", error);
+    }
+  };
+
+  const handleEdit = (book) => {
+    // Implemente aqui a navegação para a página de edição de livro
+    navigate(`/books/${book.id}`);
+  };
 
   return (
     <Layout>
@@ -51,25 +75,19 @@ const Home = () => {
               type="text"
               placeholder="Pesquisar livro..."
               className="pl-10 p-2 rounded-full border-solid border-2 border-gray-600 w-full"
+              value={searchTerm}
+              onChange={handleSearch}
             />
           </div>
         </div>
       </div>
-      <div className="featured-section mt-8">
-        <h1 className="flex text-4xl font-bold">
-          Principais escolhas dos leitores
-        </h1>
-        <FeaturedBooks />
-        {/* <BookList
-          books={books}
-          onEdit={handleEditBook}
-          onDelete={handleDeleteBook}
-        /> */}
-      </div>
-      <div>
-        <h1 className="flex text-4xl font-bold">Generos em destaque</h1>
-
-        <PopularGenres />
+      <div className="book-list-section">
+        <BookList
+          books={filteredBooks}
+          onReserva={handleReserva}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+        />
       </div>
     </Layout>
   );

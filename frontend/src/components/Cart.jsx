@@ -1,13 +1,13 @@
 import React from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom"; // Passo 1
+import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem";
 
 const Cart = ({ books }) => {
-  const navigate = useNavigate(); // Passo 2
+  const navigate = useNavigate();
 
   const handleContinueBrowsing = () => {
-    navigate("/"); // Passo 3
+    navigate("/");
   };
 
   return (
@@ -24,9 +24,8 @@ const Cart = ({ books }) => {
           </tr>
         </thead>
         <tbody>
-          {books.map((book, index) => (
-            <CartItem key={index} book={book} />
-          ))}
+          {Array.isArray(books) &&
+            books.map((book, index) => <CartItem key={index} book={book} />)}
         </tbody>
       </table>
       <button className="continue-browsing" onClick={handleContinueBrowsing}>
