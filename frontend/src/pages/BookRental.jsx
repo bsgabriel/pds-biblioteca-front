@@ -21,11 +21,11 @@ const BookRental = () => {
   const user = {
     id: "123456",
     name: "João da Silva",
-    phone: "(99) 99999 - 9999",
-    email: "joao.silva@gmail.com",
-    cep: "99999 - 999",
-    address: "Rua do João, Nº 99",
+    email: "dsad@dsada.com",
+    phone: "123456789",
+    cep: "123456",
     image: userImage,
+    address: "Rua das Flores, 123",
   };
 
   useEffect(() => {
@@ -51,9 +51,8 @@ const BookRental = () => {
 
   const handleBooking = async () => {
     try {
-      for (let reservation of reservationDetails) {
-        await axios.post(`${baseURLReserva}`, reservation);
-      }
+      console.log(reservationDetails);
+      await axios.post(`${baseURLReserva}`, reservationDetails[0]);
       alert("Reserva feita com sucesso!");
     } catch (error) {
       console.error("Erro ao fazer a reserva:", error);
