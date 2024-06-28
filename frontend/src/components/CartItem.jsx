@@ -1,7 +1,7 @@
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const CartItem = ({ book }) => {
+const CartItem = ({ book, addReservationDetail }) => {
   const [quantity, setQuantity] = useState(1);
   const [weeks, setWeeks] = useState(1);
 
@@ -18,6 +18,18 @@ const CartItem = ({ book }) => {
       setWeeks(value);
     }
   };
+
+  useEffect(() => {
+    const bookingDate = moment().format("YYYY-MM-DD");
+    const returnDate = moment().add(weeks, "weeks").format("YYYY-MM-DD");
+
+    addReservationDetail({
+      bookId: book.id,
+      clientId: "123456", // Este valor deve ser dinâmico baseado no usuário logado
+      bookingDate,
+      returnDate,
+    });
+  }, [weeks, book.id, addReservationDetail]);
 
   return (
     <tr className="cart-item">

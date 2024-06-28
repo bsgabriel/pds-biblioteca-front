@@ -1,12 +1,17 @@
 import React from "react";
 import "../styles/BookRental.css";
 
-const UserInfo = ({ user }) => {
+const UserInfo = ({ user, handleReservation }) => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleReservation();
+  };
+
   return (
     <div className="user-info">
       <h2>informações do usuário</h2>
       <h1>Quem está retirando?</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>
           Nome Completo
           <input type="text" value={user.name} readOnly />

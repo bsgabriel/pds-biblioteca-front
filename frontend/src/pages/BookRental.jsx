@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Cart from "../components/Cart";
 import Layout from "../components/Layout";
@@ -10,11 +10,13 @@ import "../styles/BookRental.css";
 import userImage from "../assets/leoncio.jpeg";
 
 const baseURL = "http://localhost:8080/book/";
+const baseURLReserva = "http://localhost:8080/booking";
 
 const BookRental = () => {
   const { bookId } = useParams();
   const [selectedBook, setSelectedBook] = useState(null);
   const [books, setBooks] = useState([]);
+  const [reservationDetails, setReservationDetails] = useState([]);
 
   const user = {
     id: "123456",
@@ -47,13 +49,30 @@ const BookRental = () => {
     }
   }, [selectedBook]);
 
+  const handleBooking = async () => {
+    try {
+      for (let reservation of reservationDetails) {
+        await axios.post(`${baseURLReserva}`, reservation);
+      }
+      alert("Reserva feita com sucesso!");
+    } catch (error) {
+      console.error("Erro ao fazer a reserva:", error);
+      alert("Erro ao fazer a reserva");
+    }
+  };
+
+  const addReservationDetail = useCallback((detail) => {
+    setReservationDetails((prevDetails) => [...prevDetails, detail]);
+    console.log(reservationDetails);
+  }, []);
+
   return (
     <Layout>
       <div className="book-rental">
         <UserBar user={user} />
         <div className="cart-user-info-container">
-          <Cart books={books} />
-          <UserInfo user={user} />
+          <Cart books={books} addReservationDetail={addReservationDetail} />
+          <UserInfo user={user} handleReservation={handleBooking} />
         </div>
       </div>
     </Layout>
