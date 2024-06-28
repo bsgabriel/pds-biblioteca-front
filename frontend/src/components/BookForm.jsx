@@ -6,7 +6,7 @@ import "../styles/BookForm.css";
 
 const baseURL = "http://localhost:8080/book";
 
-const BookForm = ({ onSave }) => {
+const BookForm = ({ book, onSave }) => {
   const { bookId } = useParams();
   const [formData, setFormData] = useState({
     title: "",
@@ -14,23 +14,24 @@ const BookForm = ({ onSave }) => {
     publisher: "",
     year: "",
     imageBook: "",
+    stockQuantity: "",
   });
 
   useEffect(() => {
-    const fetchBook = async () => {
-      try {
-        const response = await axios.get(`${baseURL}/${bookId}`);
-        console.log(response.data);
-        setFormData(response.data);
-      } catch (error) {
-        console.error("Error fetching book:", error);
-      }
-    };
-
-    if (bookId) {
+    if (book) {
+      setFormData(book);
+    } else if (bookId) {
+      const fetchBook = async () => {
+        try {
+          const response = await axios.get(`${baseURL}/${bookId}`);
+          setFormData(response.data);
+        } catch (error) {
+          console.error("Error fetching book:", error);
+        }
+      };
       fetchBook();
     }
-  }, [bookId]);
+  }, [book, bookId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -105,6 +106,16 @@ const BookForm = ({ onSave }) => {
             type="number"
             name="year"
             value={formData.year}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Quantidade</label>
+          <input
+            type="number"
+            name="stockQuantity"
+            value={formData.stockQuantity}
             onChange={handleChange}
             required
           />
